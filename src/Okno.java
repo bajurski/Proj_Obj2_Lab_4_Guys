@@ -44,7 +44,7 @@ public class Okno implements ActionListener {
         kontener.add(lata);
 
         tytul = new JLabel();
-        tytul.setText("Program obliczajacy godziny zycia");
+        tytul.setText("Program obliczajacy dni zycia");
         tytul.setSize(420,20);
         tytul.setLocation(200,20);
         tytul.setFont(new Font("Arial", Font.BOLD, 14));
@@ -98,8 +98,8 @@ public class Okno implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == kalkulujButton) {
             int latka = Integer.parseInt(lata.getText());
-            int wyn = latka * 365 * 24;
-            wynik.setText(imie.getText() + " przezyles " + String.valueOf(wyn)+ " godzin");
+            int wyn = latka * 365 ;
+            wynik.setText(imie.getText() + " przezyles " + String.valueOf(wyn)+ " dni");
             wynik.setVisible(true);
 
         } else {
