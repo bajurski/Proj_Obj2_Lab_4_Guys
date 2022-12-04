@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Okno implements ActionListener {
 
-    private  final JFrame farme;
+    private  final JFrame frame;
     private  final Container kontener;
     private final JTextField imie;
     private final JTextField lata;
@@ -20,12 +22,12 @@ public class Okno implements ActionListener {
 
     public Okno() {
 
-        farme = new JFrame("Ile godzin");
-        farme.setBounds(300, 90, 700, 350);
-        farme.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        farme.setResizable(false);
+        frame = new JFrame("Ile godzin");
+        frame.setBounds(300, 90, 700, 350);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setResizable(false);
 
-        kontener = farme.getContentPane();
+        kontener = frame.getContentPane();
         kontener.setBackground(Color.gray);
         kontener.setLayout(null);
 
@@ -61,7 +63,6 @@ public class Okno implements ActionListener {
         kontener.add(ileLat);
 
         wynik = new JLabel();
-        //wynik.setText("Ile lat");
         wynik.setFont(new Font("Arial", Font.BOLD, 20));
         wynik.setSize(400,20);
         wynik.setLocation(100,250);
@@ -79,12 +80,31 @@ public class Okno implements ActionListener {
         resetButton.addActionListener(this);
         kontener.add(resetButton);
 
-
-        farme.setVisible(true);
+        lata.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ke) {
+                String value = lata.getText();
+                int l = value.length();
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
+                    lata.setEditable(true);
+                } else {
+                    lata.setEditable(false);
+                }
+            }
+        });
+        frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == kalkulujButton) {
+            int latka = Integer.parseInt(lata.getText());
+            int wyn = latka * 365 * 24;
+            wynik.setText(imie.getText() + " przezyles " + String.valueOf(wyn)+ " godzin");
+            wynik.setVisible(true);
 
+        } else {
+            frame.dispose();
+            new Okno();
+        }
     }
 }
